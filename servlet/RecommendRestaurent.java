@@ -19,16 +19,16 @@ import com.google.gson.Gson;
 import dataClass.RestaurentData;
 
 /**
- * Servlet implementation class Restaurent
+ * Servlet implementation class RecommendRestaurent
  */
-@WebServlet("/Restaurent")
-public class Restaurent extends HttpServlet {
+@WebServlet("/RecommendRestaurent")
+public class RecommendRestaurent extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Restaurent() {
+    public RecommendRestaurent() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,10 +45,10 @@ public class Restaurent extends HttpServlet {
 		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=admin";
 		Connection con = null;
 		ResultSet rs = null;
-		String sql = "select * from Restaurent limit "+request.getParameter("start")+",10";
+		String sql = "select * from RecommendRestaurent";
 		String responseStr = "fail";
 		Gson gson = new Gson();
-		RestaurentData[] dataArray = new RestaurentData[10];
+		RestaurentData[] dataArray = new RestaurentData[6];
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(dbName);
