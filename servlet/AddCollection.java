@@ -17,14 +17,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/AddCollection")
+public class AddCollection extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public AddCollection() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,30 +35,31 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.addHeader("Access-Control-Allow-Origin","*");
-		System.out.println(request.getParameter("userName") + ":" + request.getParameter("password"));
+		response.addHeader("Access-Control-Allow-Headers","Content-Type");
+		response.addHeader("Access-Control-Allow-Methods"," GET, POST, OPTIONS");
+//		System.out.println(request.getParameter("userName") + ":" + request.getParameter("password"));
 		PrintWriter out = response.getWriter();
 		Statement statement = null;
-		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=admin";
+		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=admin&useUnicode=true&characterEncoding=utf-8&useSSL=false";
 		Connection con = null;
 		ResultSet rs = null;
-		String sql = "select * from Users where userName='"+request.getParameter("userName")+"'";
-		String responseStr = "fail";
+		String sql1 = "select * from Collection where restaurentId =\""+ request.getParameter("restaurentId") +"\"and userName=\""+request.getParameter("userName")+"\"";
+		String sql = "insert into Collection(userName,restaurentId) values(\""+request.getParameter("userName")+"\",\""+request.getParameter("restaurentId")+"\")";
+		String responseStr = "fail"; 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(dbName);
 			statement = con.createStatement();
-			rs = statement.executeQuery(sql);
-			if(rs.next()){
-				if(rs.getString("userName").equals(request.getParameter("userName")) && rs.getString("password").equals(request.getParameter("password")) ){
-					responseStr = request.getParameter("userName");
-				}
+			rs = statement.executeQuery(sql1);
+			if(!rs.next()){
+				statement.executeUpdate(sql);
+				responseStr = "success";
 			}
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (ClassNotFoundException | SQLException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		out.write(responseStr);
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
