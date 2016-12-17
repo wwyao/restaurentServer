@@ -45,10 +45,19 @@ public class Restaurent extends HttpServlet {
 		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=admin";
 		Connection con = null;
 		ResultSet rs = null;
-		String sql = "select * from Restaurent limit "+request.getParameter("start")+",10";
+		String sql = "";
+		RestaurentData[] dataArray;
+		System.out.println(request.getParameter("searchText"));
+		if(request.getParameter("searchText") != null){
+			dataArray = new RestaurentData[1];
+			sql = "select * from Restaurent  where title=\""+request.getParameter("searchText")+"\"";
+		}else{
+			dataArray = new RestaurentData[10];
+			sql = "select * from Restaurent limit "+request.getParameter("start")+",10";
+		}
 		String responseStr = "fail";
 		Gson gson = new Gson();
-		RestaurentData[] dataArray = new RestaurentData[10];
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(dbName);
