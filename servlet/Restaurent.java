@@ -42,13 +42,14 @@ public class Restaurent extends HttpServlet {
 //		System.out.println(request.getParameter("userName") + ":" + request.getParameter("password"));
 		PrintWriter out = response.getWriter();
 		Statement statement = null;
-		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=admin";
+		String dbName = "jdbc:mysql://127.0.0.1/restaurent?user=root&password=admin";
 		Connection con = null;
 		ResultSet rs = null;
 		String sql = "";
 		RestaurentData[] dataArray;
 		System.out.println(request.getParameter("searchText"));
-		if(request.getParameter("searchText") != null){
+		System.out.println(request.getParameter("searchText") != null);
+		if(request.getParameter("searchText") != null && request.getParameter("searchText") != ""){
 			dataArray = new RestaurentData[1];
 			sql = "select * from Restaurent  where title=\""+request.getParameter("searchText")+"\"";
 		}else{
