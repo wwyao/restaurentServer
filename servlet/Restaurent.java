@@ -42,7 +42,7 @@ public class Restaurent extends HttpServlet {
 //		System.out.println(request.getParameter("userName") + ":" + request.getParameter("password"));
 		PrintWriter out = response.getWriter();
 		Statement statement = null;
-		String dbName = "jdbc:mysql://127.0.0.1/restaurent?user=root&password=admin";
+		String dbName = "jdbc:mysql://127.0.0.1/restaurent?user=root&password=root";
 		Connection con = null;
 		ResultSet rs = null;
 		String sql = "";
@@ -51,10 +51,10 @@ public class Restaurent extends HttpServlet {
 		System.out.println(request.getParameter("searchText") != null);
 		if(request.getParameter("searchText") != null && request.getParameter("searchText") != ""){
 			dataArray = new RestaurentData[1];
-			sql = "select * from Restaurent  where title=\""+request.getParameter("searchText")+"\"";
+			sql = "select * from allrestaurents  where title=\""+request.getParameter("searchText")+"\"";
 		}else{
 			dataArray = new RestaurentData[10];
-			sql = "select * from Restaurent limit "+request.getParameter("start")+",10";
+			sql = "select * from allrestaurents limit "+request.getParameter("start")+",10";
 		}
 		String responseStr = "fail";
 		Gson gson = new Gson();

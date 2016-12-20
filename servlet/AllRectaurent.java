@@ -42,10 +42,10 @@ public class AllRectaurent extends HttpServlet {
 //		System.out.println(request.getParameter("userName") + ":" + request.getParameter("password"));
 		PrintWriter out = response.getWriter();
 		Statement statement = null;
-		String dbName = "jdbc:mysql://127.0.0.1/restaurent?user=root&password=admin";
+		String dbName = "jdbc:mysql://127.0.0.1/restaurent?user=root&password=root";
 		Connection con = null;
 		ResultSet rs = null;
-		String sql = "select * from Restaurent";
+		String sql = "select * from allrestaurents";
 		int i = 0;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

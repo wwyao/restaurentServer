@@ -52,10 +52,10 @@ public class AddOrder extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		Statement statement = null;
-		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=admin&useUnicode=true&characterEncoding=utf-8&useSSL=false";
+		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=root&useUnicode=true&characterEncoding=utf-8&useSSL=false";
 		Connection con = null;
 		ResultSet rs = null;
-		String sql = "insert into Orders(statu,time,peopleNum,phone,sex,userName) values(\""+orderData.statu+"\",\""+orderData.time+"\",\""+orderData.peopleNum+"\",\""+orderData.phone+"\",\""+orderData.sex+"\",\""+orderData.userName+"\")";
+		String sql = "insert into orders(statu,time,peopleNum,phone,sex,userName) values(\""+orderData.statu+"\",\""+orderData.time+"\",\""+orderData.peopleNum+"\",\""+orderData.phone+"\",\""+orderData.sex+"\",\""+orderData.userName+"\")";
 		String responseStr = "success"; 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

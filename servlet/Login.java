@@ -38,10 +38,10 @@ public class Login extends HttpServlet {
 		System.out.println(request.getParameter("userName") + ":" + request.getParameter("password"));
 		PrintWriter out = response.getWriter();
 		Statement statement = null;
-		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=admin";
+		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=root";
 		Connection con = null;
 		ResultSet rs = null;
-		String sql = "select * from Users where userName='"+request.getParameter("userName")+"'";
+		String sql = "select * from users where userName='"+request.getParameter("userName")+"'";
 		String responseStr = "fail";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

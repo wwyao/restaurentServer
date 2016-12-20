@@ -38,11 +38,11 @@ public class Register extends HttpServlet {
 //		System.out.println(request.getParameter("userName") + ":" + request.getParameter("password"));
 		PrintWriter out = response.getWriter();
 		Statement statement = null;
-		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=admin&useUnicode=true&characterEncoding=utf-8&useSSL=false";
+		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=root&useUnicode=true&characterEncoding=utf-8&useSSL=false";
 		Connection con = null;
 		ResultSet rs = null;
-		String sql1 = "select * from Users where userName =\""+ request.getParameter("userName") +"\"";
-		String sql = "insert into Users(userName,password) values(\""+request.getParameter("userName")+"\",\""+request.getParameter("password")+"\")";
+		String sql1 = "select * from users where userName =\""+ request.getParameter("userName") +"\"";
+		String sql = "insert into users(userName,password) values(\""+request.getParameter("userName")+"\",\""+request.getParameter("password")+"\")";
 		String responseStr = "fail";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

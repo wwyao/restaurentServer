@@ -40,11 +40,11 @@ public class AddCollection extends HttpServlet {
 //		System.out.println(request.getParameter("userName") + ":" + request.getParameter("password"));
 		PrintWriter out = response.getWriter();
 		Statement statement = null;
-		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=admin&useUnicode=true&characterEncoding=utf-8&useSSL=false";
+		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=root&useUnicode=true&characterEncoding=utf-8&useSSL=false";
 		Connection con = null;
 		ResultSet rs = null;
-		String sql1 = "select * from Collection where restaurentId =\""+ request.getParameter("restaurentId") +"\"and userName=\""+request.getParameter("userName")+"\"";
-		String sql = "insert into Collection(userName,restaurentId) values(\""+request.getParameter("userName")+"\",\""+request.getParameter("restaurentId")+"\")";
+		String sql1 = "select * from collection where restaurentId =\""+ request.getParameter("restaurentId") +"\"and userName=\""+request.getParameter("userName")+"\"";
+		String sql = "insert into collection(userName,restaurentId) values(\""+request.getParameter("userName")+"\",\""+request.getParameter("restaurentId")+"\")";
 		String responseStr = "fail"; 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
