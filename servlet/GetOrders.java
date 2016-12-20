@@ -16,19 +16,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import dataClass.OrderData;
 import dataClass.RestaurentData;
 
 /**
  * Servlet implementation class Restaurent
  */
-@WebServlet("/Restaurent")
-public class Restaurent extends HttpServlet {
+@WebServlet("/GetOrders")
+public class GetOrders extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Restaurent() {
+    public GetOrders() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,28 +39,18 @@ public class Restaurent extends HttpServlet {
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.addHeader("Access-Control-Allow-Origin","*");
+    	response.addHeader("Access-Control-Allow-Origin","*");
+		response.addHeader("Access-Control-Allow-Headers","Content-Type");
+		response.addHeader("Access-Control-Allow-Methods"," GET, POST, OPTIONS");
 //		System.out.println(request.getParameter("userName") + ":" + request.getParameter("password"));
 		PrintWriter out = response.getWriter();
 		Statement statement = null;
 		String dbName = "jdbc:mysql://127.0.0.1/restaurent?user=root&password=root";
 		Connection con = null;
 		ResultSet rs = null;
-		String sql = "";
-		RestaurentData[] dataArray;
-		System.out.println(request.getParameter("searchText"));
-		System.out.println(request.getParameter("searchText") != null);
-		if(request.getParameter("searchText") != null && request.getParameter("searchText") != ""){
-			dataArray = new RestaurentData[1];
-			sql = "select * from allrestaurents  where title=\""+request.getParameter("searchText")+"\"";
-		}else{
-			int c = Integer.parseInt(request.getParameter("count"));
-			dataArray = new RestaurentData[c];
-			sql = "select * from allrestaurents limit "+request.getParameter("start")+","+request.getParameter("count");
-		}
-		String responseStr = "fail";
+		String sql = "select * from orders where statu=" + request.getParameter("statu");
+		OrderData[] resultArray;
 		Gson gson = new Gson();
-		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(dbName);
@@ -67,29 +58,32 @@ public class Restaurent extends HttpServlet {
 			rs = statement.executeQuery(sql);
 			int i = 0;
 			while(rs.next()){
-				RestaurentData rest = new RestaurentData();
-				rest.id = rs.getInt("restaurentId");
-				rest.address = rs.getString("title");
-				rest.title = rs.getString("title");
-				rest.alias = rs.getString("alias");
-				rest.time = rs.getString("time");
-				rest.money = rs.getString("money");
-				rest.feature = rs.getString("feature");
-				rest.phone = rs.getString("phone");
-				rest.imgSrc1 = rs.getString("imgSrc1");
-				rest.imgSrc2 = rs.getString("imgSrc2");
-				rest.imgSrc3 = rs.getString("imgSrc3");
-				rest.score1 = rs.getString("score1");
-				rest.score2 = rs.getString("score2");
-				rest.score3 = rs.getString("score3");
-				dataArray[i] = rest;
 				i++;
 			}
+			resultArray = new OrderData[i];
+			rs = statement.executeQuery(sql);
+			int j = 0;
+			while(rs.next()){
+				OrderData od = new OrderData(); 
+				od.statu = rs.getString("statu");
+				od.time = rs.getString("time");
+				od.peopleNum = rs.getString("peopleNum");
+				od.phone = rs.getString("phone");
+				od.sex = rs.getString("sex");
+				od.userName = rs.getString("userName");
+				od.restaurentName = rs.getString("restaurentName");
+				od.restaurentId = rs.getString("restaurentId");
+				od.name = rs.getString("name");
+				od.helpOther = rs.getString("helpOther");
+				resultArray[j] = od;
+				j++;
+			}
+			out.write(gson.toJson(resultArray));
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		out.write(gson.toJson(dataArray));
+		
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

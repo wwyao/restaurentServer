@@ -9,4 +9,7 @@ public class OrderData {
 	public String helpOther;
 	public String userName;
 	public String statu;
+	public String restaurentId;
+	public String restaurentName;
+	
 }
