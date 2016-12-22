@@ -43,16 +43,22 @@ public class HotRestaurent extends HttpServlet {
 		String dbName = "jdbc:mysql://localhost/restaurent?user=root&password=root";
 		Connection con = null;
 		ResultSet rs = null;
-		String sql = "select * from hotrestaurent";
+		String sql = "select * from hotrestaurent where area=\""+request.getParameter("area")+"\"";
 		String responseStr = "fail";
 		Gson gson = new Gson();
-		RestaurentData[] dataArray = new RestaurentData[6];
+		RestaurentData[] dataArray = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(dbName);
 			statement = con.createStatement();
 			rs = statement.executeQuery(sql);
 			int i = 0;
+			while(rs.next()){
+				i++;
+			}
+			dataArray = new RestaurentData[i];
+			rs = statement.executeQuery(sql);
+			i = 0;
 			while(rs.next()){
 				RestaurentData rest = new RestaurentData();
 				rest.id = rs.getInt("restaurentId");

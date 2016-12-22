@@ -47,8 +47,7 @@ public class Restaurent extends HttpServlet {
 		ResultSet rs = null;
 		String sql = "";
 		RestaurentData[] dataArray;
-		System.out.println(request.getParameter("searchText"));
-		System.out.println(request.getParameter("searchText") != null);
+		
 		if(request.getParameter("searchText") != null && request.getParameter("searchText") != ""){
 			dataArray = new RestaurentData[1];
 			sql = "select * from allrestaurents  where title=\""+request.getParameter("searchText")+"\"";
