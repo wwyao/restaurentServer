@@ -1,6 +1,7 @@
 package dataClass;
 
 public class OrderData {
+	public int orderId;
 	public String time;
 	public String peopleNum;
 	public String name;
@@ -11,5 +12,7 @@ public class OrderData {
 	public String statu;
 	public String restaurentId;
 	public String restaurentName;
+	public String bookMoney;
+	public String imgSrc;
 	
 }

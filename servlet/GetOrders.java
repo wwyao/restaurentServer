@@ -39,16 +39,18 @@ public class GetOrders extends HttpServlet {
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+    	request.setCharacterEncoding("utf-8");
     	response.addHeader("Access-Control-Allow-Origin","*");
 		response.addHeader("Access-Control-Allow-Headers","Content-Type");
 		response.addHeader("Access-Control-Allow-Methods"," GET, POST, OPTIONS");
+		response.setCharacterEncoding("utf-8");
 //		System.out.println(request.getParameter("userName") + ":" + request.getParameter("password"));
 		PrintWriter out = response.getWriter();
 		Statement statement = null;
 		String dbName = "jdbc:mysql://127.0.0.1/restaurent?user=root&password=root";
 		Connection con = null;
 		ResultSet rs = null;
-		String sql = "select * from orders where statu=" + request.getParameter("statu");
+		String sql = "select * from orders where statu=\"Î´¸¶¿î\" and userName = \"admin\"";
 		OrderData[] resultArray;
 		Gson gson = new Gson();
 		try {
@@ -65,6 +67,7 @@ public class GetOrders extends HttpServlet {
 			int j = 0;
 			while(rs.next()){
 				OrderData od = new OrderData(); 
+				od.orderId = rs.getInt("orderId");
 				od.statu = rs.getString("statu");
 				od.time = rs.getString("time");
 				od.peopleNum = rs.getString("peopleNum");
@@ -75,6 +78,8 @@ public class GetOrders extends HttpServlet {
 				od.restaurentId = rs.getString("restaurentId");
 				od.name = rs.getString("name");
 				od.helpOther = rs.getString("helpOther");
+				od.bookMoney = rs.getString("bookMoney");
+				od.imgSrc = rs.getString("imgSrc");
 				resultArray[j] = od;
 				j++;
 			}
